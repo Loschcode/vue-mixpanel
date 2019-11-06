@@ -10,6 +10,5 @@
     "type": "git"
   },
   "dependencies": {
-    "mixpanel": "^0.10.3"
   }
 }
