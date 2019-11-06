@@ -14,7 +14,7 @@ VueMixpanel.install = function (Vue, { config, token }) {
   Vue.prototype.$mixpanel = Mixpanel.init(token)
 
   const endConfig = config || {}
-  if (endConfig.length > 0) Vue.prototype.$mixpanel.set_config(endConfig)
+  if (Object.keys(endConfig).length > 0) Vue.prototype.$mixpanel.set_config(endConfig)
 }
 
 export default VueMixpanel
