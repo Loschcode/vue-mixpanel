@@ -1,8 +1,10 @@
 {
   "name": "VueMixpanel",
   "version": "1.0.0",
+  "description": "A simple library to use mixpanel through VueJS",
   "main": "index.js",
   "license": "MIT",
+  "author": "Laurent Schaffner (laurent.schaffner.code@gmail.com)",
   "repository": {
     "url": "https://github.com/Loschcode/vue-mixpanel",
     "type": "git"
