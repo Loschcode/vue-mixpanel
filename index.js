@@ -1,5 +1,5 @@
 /**
-  * Vue Mixpanel v1.0.0
+  * Vue Mixpanel v1.0.3
   * https://github.com/Loschcode/vue-mixpanel
   *
   * Copyright 2019, cmp-cc
