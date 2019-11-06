@@ -10,8 +10,11 @@ import Mixpanel from 'mixpanel'
 
 let VueMixpanel = {}
 
-VueMixpanel.install = function (Vue, options) {
-  Vue.prototype.$mixpanel = Mixpanel.init(options.token)
+VueMixpanel.install = function (Vue, { config, token }) {
+  Vue.prototype.$mixpanel = Mixpanel.init(token)
+
+  const endConfig = config || {}
+  if (endConfig.length > 0) Vue.prototype.$mixpanel.set_config(endConfig)
 }
 
 export default VueMixpanel

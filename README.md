@@ -35,7 +35,17 @@ Vue.use(VueMixpanel, {
 
 ## Example Usage
 
-#### track an event
+#### Initialize with config
+```
+Vue.use(VueMixpanel, {
+  token: YOUR_TOKEN,
+  config: {
+    debug: true
+  }
+})
+```
+
+#### Track an event
 ```
 this.$mixpanel.track('event name', {
     distinct_id: 'unique client id',
@@ -45,12 +55,12 @@ this.$mixpanel.track('event name', {
 });
 ```
 
-#### create an alias
+#### Create an alias
 ```
 this.$mixpanel.alias('distinct_id', 'your_alias');
 ```
 
-#### increment a numeric property
+#### Increment a numeric property
 ```
 this.$mixpanel.people.increment('13793', 'games_played');
 ```
