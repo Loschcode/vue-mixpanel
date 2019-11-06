@@ -1,0 +1,13 @@
+{
+  "name": "VueMixpanel",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "repository": {
+    "url": "https://github.com/Loschcode/vue-mixpanel",
+    "type": "git"
+  },
+  "dependencies": {
+    "mixpanel": "^0.10.3"
+  }
+}
