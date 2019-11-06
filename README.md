@@ -1,6 +1,6 @@
 # vue-mixpanel
 
-A simple Vue.js plugin for Mixpanel
+A simple Vue.js plugin for [Mixpanel](https://mixpanel.com/)
 
 ## Installation
 
@@ -30,7 +30,7 @@ Vue.use(VueMixpanel, {
 
 ### How does it work?
 
-- Initialize it by using the token given by your Mixpanel account in the `Vue.use()` inside you `main.js`
+- Initialize it by using the token given by your [Mixpanel](https://mixpanel.com/) account in the `Vue.use()` inside you `main.js`
 - Start using their public API through `this.$mixpanel` in your components.
 
 ## Example Usage
