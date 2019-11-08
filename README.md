@@ -7,7 +7,7 @@ A simple Vue.js plugin for [Mixpanel](https://mixpanel.com/)
 ### Browser
 ```
   <script src="https://unpkg.com/vue/dist/vue.js"></script>
-  <script src="https://unpkg.com/vue-mixpanel@1.0.0/index.js"></script>
+  <script src="https://unpkg.com/vue-mixpanel@1.0.4/index.js"></script>
 ```
 ### Package Managers
 ```
