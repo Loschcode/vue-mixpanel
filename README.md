@@ -2,6 +2,13 @@
 
 A simple Vue.js plugin for [Mixpanel](https://mixpanel.com/)
 
+---
+**IMPORTANT**
+
+If the browser where you're testing the tracking has [Do Not Track](https://community.mixpanel.com/sending-data-to-mixpanel-11/integration-issue-539) enabled, it won't work. This is due to Mixpanel limitations and is out of control of this plugin.
+
+---
+
 ## Installation
 
 ### Browser
