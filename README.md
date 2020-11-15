@@ -2,14 +2,11 @@
 
 A simple Vue.js plugin for [Mixpanel](https://mixpanel.com/)
 
----
-**IMPORTANT**
+## Prerequisite ⚠️
 
 If the browser where events are dispatched has [Do Not Track](https://community.mixpanel.com/sending-data-to-mixpanel-11/integration-issue-539) enabled, it won't work. This is due to Mixpanel limitations and is out of control of this plugin.
 
 For testing purpose, don't forget to [turn it off yourself](https://support.google.com/chrome/answer/2790761?co=GENIE.Platform%3DDesktop&hl=en-GB).
-
----
 
 ## Installation
 
