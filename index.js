@@ -12,10 +12,15 @@ let VueMixpanel = {}
 
 VueMixpanel.install = function (Vue, { config, token }) {
   Vue.prototype.$mixpanel = snippet
-  Vue.prototype.$mixpanel.init(token)
-
   const endConfig = config || {}
-  if (Object.keys(endConfig).length > 0) Vue.prototype.$mixpanel.set_config(endConfig)
+
+  snippet.init(token, {
+    loaded (mixpanel) {
+      Vue.prototype.$mixpanel = mixpanel
+
+      if (Object.keys(endConfig).length > 0) Vue.prototype.$mixpanel.set_config(endConfig)
+    }
+  })
 }
 
 export default VueMixpanel
