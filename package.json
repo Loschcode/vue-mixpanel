@@ -9,6 +9,11 @@
     "url": "https://github.com/Loschcode/vue-mixpanel",
     "type": "git"
   },
+  "devDependencies": {
+    "eslint": "^7.13.0",
+    "eslint-plugin-vue": "^7.1.0"
+  },
   "dependencies": {
+    "mixpanel-browser": "^2.39.0"
   }
 }
