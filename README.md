@@ -1,3 +1,5 @@
+**If you like this plugin do not hesitate to [star it](https://github.com/Loschcode/vue-mixpanel) or [follow me on Github](https://github.com/Loschcode). I've noticed hundreds of people use this one weekly in particular without problem, it'll motivate me to develop more open source stuff, thanks 🙂**
+
 # vue-mixpanel
 
 A simple Vue.js plugin for [Mixpanel](https://mixpanel.com/)
