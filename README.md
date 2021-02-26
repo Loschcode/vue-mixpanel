@@ -15,7 +15,7 @@ For testing purpose, don't forget to [turn it off yourself](https://support.goog
 ### Browser
 ```
   <script src="https://unpkg.com/vue/dist/vue.js"></script>
-  <script src="https://unpkg.com/vue-mixpanel@1.0.6/index.js"></script>
+  <script src="https://unpkg.com/vue-mixpanel@1.0.7/index.js"></script>
 ```
 ### Package Managers
 ```
