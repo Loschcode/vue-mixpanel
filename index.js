@@ -1,6 +1,6 @@
 "use strict";
 /**
-  * Vue Mixpanel v1.1.0
+  * Vue Mixpanel v2.0.0
   * https://github.com/Loschcode/vue-mixpanel
   *
   * Copyright 2020-2021, cmp-cc
@@ -11,16 +11,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var mixpanel_browser_1 = __importDefault(require("mixpanel-browser"));
-var VueMixpanel = {
-    install: function () { }
+exports.default = {
+    install: function (app, _a) {
+        var _b = _a.config, config = _b === void 0 ? {} : _b, token = _a.token;
+        var defaultConfig = {};
+        var endConfig = Object.assign(config, defaultConfig);
+        mixpanel_browser_1.default.init(token, endConfig);
+        app.provide('mixpanel', mixpanel_browser_1.default);
+    }
 };
-VueMixpanel.install = function (Vue, _a) {
-    var config = _a.config, token = _a.token;
-    if (typeof config !== 'object')
-        config = {};
-    Vue.prototype.$mixpanel = mixpanel_browser_1.default;
-    var defaultConfig = {};
-    var endConfig = Object.assign(config, defaultConfig);
-    Vue.prototype.$mixpanel.init(token, endConfig);
-};
-exports.default = VueMixpanel;

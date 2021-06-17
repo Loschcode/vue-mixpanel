@@ -1,5 +1,5 @@
 /**
-  * Vue Mixpanel v1.1.0
+  * Vue Mixpanel v2.0.0
   * https://github.com/Loschcode/vue-mixpanel
   *
   * Copyright 2020-2021, cmp-cc
@@ -8,23 +8,12 @@
 
 import mixpanel from 'mixpanel-browser'
 
-interface VueMixpanelType {
-  install: object
+export default {
+  install: (app: any, { config = {}, token }: { config: object; token: string;}) => {
+    const defaultConfig = {}
+    const endConfig = Object.assign(config, defaultConfig)
+
+    mixpanel.init(token, endConfig)
+    app.provide('mixpanel', mixpanel)
+  }
 }
-
-let VueMixpanel: VueMixpanelType = {
-  install: () => {}
-}
-
-VueMixpanel.install = function (Vue: any, { config, token }: { config: object; token: string; }) {
-  if (typeof config !== 'object') config = {}
-
-  Vue.prototype.$mixpanel = mixpanel
-
-  const defaultConfig = {}
-  const endConfig = Object.assign(config, defaultConfig)
-
-  Vue.prototype.$mixpanel.init(token, endConfig)
-}
-
-export default VueMixpanel
