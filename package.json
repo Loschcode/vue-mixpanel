@@ -1,6 +1,6 @@
 {
   "name": "vue-mixpanel",
-  "version": "1.0.7",
+  "version": "2.0.0",
   "description": "A simple library to use mixpanel through VueJS",
   "main": "index.js",
   "license": "MIT",
