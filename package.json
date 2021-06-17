@@ -10,6 +10,7 @@
     "type": "git"
   },
   "devDependencies": {
+    "@types/mixpanel-browser": "^2.35.6",
     "eslint": "^7.13.0",
     "eslint-plugin-vue": "^7.1.0"
   },
