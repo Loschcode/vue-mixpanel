@@ -1,87 +1,183 @@
-**If you like this plugin do not hesitate to [star it](https://github.com/Loschcode/vue-mixpanel) or [follow me on Github](https://github.com/Loschcode). I've noticed hundreds of people use this one weekly in particular without problem, it'll motivate me to develop more open source stuff, thanks 🙂**
-
 # vue-mixpanel
 
-A simple Vue.js plugin for [Mixpanel](https://mixpanel.com/)
-
-## Prerequisite ⚠️
-
-If the browser where events are dispatched has [Do Not Track](https://community.mixpanel.com/sending-data-to-mixpanel-11/integration-issue-539) enabled, it won't work. This is due to Mixpanel limitations and is out of control of this plugin.
-
-For testing purpose, don't forget to [turn it off yourself](https://support.google.com/chrome/answer/2790761?co=GENIE.Platform%3DDesktop&hl=en-GB).
+Mixpanel analytics plugin for Vue 3. Type-safe, composable-based, and compatible with the full [Mixpanel JavaScript SDK](https://docs.mixpanel.com/docs/tracking-methods/sdks/javascript).
 
 ## Installation
 
-### Browser
-```
-  <script src="https://unpkg.com/vue/dist/vue.js"></script>
-  <script src="https://unpkg.com/vue-mixpanel@2.0.0/index.js"></script>
-```
-### Package Managers
-```
-npm install vue-mixpanel --save
-yarn add vue-mixpanel --save
+```bash
+npm install vue-mixpanel mixpanel-browser
 ```
 
-### How does it work?
+Both `vue` (>=3.3) and `mixpanel-browser` (>=2.45) are peer dependencies.
 
-- Initialize it by using the token given by your [Mixpanel](https://mixpanel.com/) account in the `app.use()` inside you `main.js`
-- Start using their public API with `inject` through `this.mixpanel` in your components.
+## Setup
 
-## Example Usage
-
->If you're using Vue 2 or below, please check the version [1.1.0](https://github.com/Loschcode/vue-mixpanel/releases/tag/1.1.0)
-
-#### Initialize with configuration
-```
-import App from './App.vue'
+```typescript
+import { createApp } from 'vue'
 import VueMixpanel from 'vue-mixpanel'
+import App from './App.vue'
 
 const app = createApp(App)
+
 app.use(VueMixpanel, {
-  token: YOUR_TOKEN,
+  token: 'YOUR_MIXPANEL_TOKEN',
   config: {
-    debug: true
-  }
+    debug: import.meta.env.DEV,
+    track_pageview: true,
+    persistence: 'localStorage',
+  },
 })
+
 app.mount('#app')
 ```
 
-Then, you can use it in your components like so
+## Usage
 
-```
-<script>
-export default {
-  inject: ['mixpanel'],
-  name: 'App',
+### Composable (recommended)
 
-  created () {
-    this.mixpanel.track('test')
-  }
+```vue
+<script setup lang="ts">
+import { useMixpanel } from 'vue-mixpanel'
+
+const mixpanel = useMixpanel()
+
+function onSignUp(userId: string) {
+  mixpanel.identify(userId)
+  mixpanel.people.set({ $name: 'Jane Doe', plan: 'premium' })
+  mixpanel.track('Sign Up', { method: 'email' })
 }
 </script>
 ```
 
-#### Track an event
-```
-this.mixpanel.track('event name', {
-    distinct_id: 'unique client id',
-    property_1: 'value 1',
-    property_2: 'value 2',
-    property_3: 'value 3'
-});
+### Options API
+
+```vue
+<script>
+import { mixpanelKey } from 'vue-mixpanel'
+
+export default {
+  inject: { mixpanel: { from: mixpanelKey } },
+  methods: {
+    trackEvent() {
+      this.mixpanel.track('Button Clicked')
+    },
+  },
+}
+</script>
 ```
 
-#### Create an alias
-```
-this.mixpanel.alias('distinct_id', 'your_alias');
+## Configuration
+
+All [Mixpanel SDK configuration options](https://docs.mixpanel.com/docs/tracking-methods/sdks/javascript) are supported via the `config` property:
+
+```typescript
+app.use(VueMixpanel, {
+  token: 'YOUR_TOKEN',
+  config: {
+    // Debugging
+    debug: true,
+
+    // Automatic page view tracking
+    track_pageview: 'url-with-path',
+
+    // Storage
+    persistence: 'localStorage',
+
+    // EU data residency
+    api_host: 'https://api-eu.mixpanel.com',
+
+    // Autocapture (clicks, forms, scrolls)
+    autocapture: true,
+
+    // Session replay (sample 10% of sessions)
+    record_sessions_percent: 10,
+
+    // GDPR — start opted out, call mixpanel.opt_in_tracking() on consent
+    opt_out_tracking_by_default: true,
+  },
+})
 ```
 
-#### Increment a numeric property
+## API
+
+### `VueMixpanel`
+
+Vue plugin. Install with `app.use(VueMixpanel, options)`.
+
+| Option   | Type              | Required | Description                 |
+| -------- | ----------------- | -------- | --------------------------- |
+| `token`  | `string`          | Yes      | Your Mixpanel project token |
+| `config` | `Partial<Config>` | No       | Mixpanel SDK configuration  |
+
+### `useMixpanel()`
+
+Composable that returns the Mixpanel instance. Must be called inside a component `setup()`.
+
+```typescript
+const mixpanel = useMixpanel()
 ```
-this.mixpanel.people.increment('13793', 'games_played');
+
+Throws if the plugin was not installed.
+
+### `mixpanelKey`
+
+Typed `InjectionKey<OverridedMixpanel>` for use with Vue's `inject()` or the Options API `inject` option.
+
+### `MixpanelPluginOptions`
+
+TypeScript interface for the plugin options.
+
+## Mixpanel SDK features
+
+The `useMixpanel()` composable returns the full Mixpanel instance. All SDK methods are available:
+
+```typescript
+const mixpanel = useMixpanel()
+
+// Event tracking
+mixpanel.track('Purchase', { amount: 49.99, currency: 'USD' })
+mixpanel.track_pageview()
+mixpanel.time_event('Checkout')
+
+// Identity
+mixpanel.identify('user-123')
+mixpanel.alias('user-123', mixpanel.get_distinct_id())
+mixpanel.reset()
+
+// User profiles
+mixpanel.people.set({ $email: 'user@example.com', plan: 'pro' })
+mixpanel.people.set_once({ 'First Login': new Date().toISOString() })
+mixpanel.people.increment('logins', 1)
+
+// Super properties (sent with every event)
+mixpanel.register({ app_version: '2.0.0' })
+mixpanel.register_once({ referrer: document.referrer })
+
+// Group analytics
+mixpanel.set_group('company', 'Acme Corp')
+
+// Privacy / GDPR
+mixpanel.opt_out_tracking()
+mixpanel.opt_in_tracking()
+
+// Session replay
+mixpanel.start_session_recording()
+mixpanel.stop_session_recording()
 ```
+
+See the [Mixpanel JavaScript SDK docs](https://docs.mixpanel.com/docs/tracking-methods/sdks/javascript) for the full API reference.
+
+## Migrating from v2
+
+v3 is a complete rewrite. Key changes:
+
+- **Peer dependencies**: Install `mixpanel-browser` separately (`npm install mixpanel-browser`)
+- **New composable**: Use `useMixpanel()` instead of `inject('mixpanel')`
+- **ESM + CJS**: Proper dual-format package with TypeScript declarations
+- **Built-in types**: No need for `@types/mixpanel-browser`
+
+The plugin setup API (`app.use(VueMixpanel, { token, config })`) is unchanged.
 
 ## License
-[MIT](http://opensource.org/licenses/MIT)
-Copyright (c) 2019-present, cmp-cc
+
+[MIT](LICENSE)
